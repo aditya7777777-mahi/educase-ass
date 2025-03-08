@@ -160,18 +160,3 @@ docker build -t school-management-api .
 # Run the container
 docker run -p 3000:3000 -e DB_HOST=your_db_host -e DB_USER=your_db_user -e DB_PASSWORD=your_db_password -e DB_NAME=school_management school-management-api
 ```
-
-## Error Handling
-
-The API includes comprehensive error handling:
-- Validates all input data before processing
-- Returns appropriate HTTP status codes
-- Provides descriptive error messages
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch: `git checkout -b feature/amazing-feature`
-3. Commit your changes: `git commit -m 'Add some amazing feature'`
-4. Push to the branch: `git push origin feature/amazing-feature`
-5. Open a Pull Request
