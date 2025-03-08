@@ -15,6 +15,16 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Initialize database
+(async () => {
+  try {
+    await initDb();
+    console.log('Database initialized successfully');
+  } catch (error) {
+    console.error('Failed to initialize database:', error);
+  }
+})();
+
 // Routes
 app.use('/api', schoolRoutes);
 
@@ -42,21 +52,14 @@ app.post('/api/seed-database', async (req, res) => {
   }
 });
 
-// Initialize database and start server
-const startServer = async () => {
-  try {
-    // Initialize database
-    await initDb();
-    
-    // Start the server
-    app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
-      console.log(`API Documentation available at: http://localhost:${PORT}`);
-      console.log(`To seed the database with sample data, make a POST request to: http://localhost:${PORT}/api/seed-database`);
-    });
-  } catch (error) {
-    console.error('Failed to start server:', error);
-  }
-};
+// For local development
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+    console.log(`API Documentation available at: http://localhost:${PORT}`);
+    console.log(`To seed the database with sample data, make a POST request to: http://localhost:${PORT}/api/seed-database`);
+  });
+}
 
-startServer();
+// Export for Vercel
+module.exports = app;
